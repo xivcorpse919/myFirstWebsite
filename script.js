@@ -72,9 +72,161 @@ const moodName = document.getElementById('moodName');
 const moodQuote = document.getElementById('moodQuote');
 const colorInfo = document.getElementById('colorInfo');
 const generateBtn = document.getElementById('generateBtn');
+const paletteBtn = document.getElementById('paletteBtn');
 const saveBtn = document.getElementById('saveBtn');
 const favoritesGrid = document.getElementById('favoritesGrid');
 const moodDisplay = document.getElementById('moodDisplay');
+const paletteDisplay = document.getElementById('paletteDisplay');
+const paletteInfo = document.getElementById('paletteInfo');
+
+// Color palette generation using color theory
+function hslToHex(h, s, l) {
+    l /= 100;
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = n => {
+        const k = (n + h / 30) % 12;
+        const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+        return Math.round(255 * color).toString(16).padStart(2, '0');
+    };
+    return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
+}
+
+// Generate harmonious color palette using different color schemes
+function generateColorPalette() {
+    const schemes = [
+        {
+            name: 'Analogous Harmony',
+            description: 'Colors that sit next to each other on the color wheel',
+            generate: (baseHue) => {
+                const saturation = 65 + Math.random() * 25;
+                return [
+                    hslToHex(baseHue, saturation, 45),
+                    hslToHex((baseHue + 15) % 360, saturation, 55),
+                    hslToHex((baseHue + 30) % 360, saturation + 10, 65),
+                    hslToHex((baseHue + 45) % 360, saturation, 55),
+                    hslToHex((baseHue + 60) % 360, saturation, 45)
+                ];
+            }
+        },
+        {
+            name: 'Complementary Spectrum',
+            description: 'Opposite colors creating vibrant contrast',
+            generate: (baseHue) => {
+                const saturation = 70 + Math.random() * 20;
+                const complement = (baseHue + 180) % 360;
+                return [
+                    hslToHex(baseHue, saturation, 35),
+                    hslToHex(baseHue, saturation - 10, 50),
+                    hslToHex(baseHue, saturation - 20, 70),
+                    hslToHex(complement, saturation - 10, 55),
+                    hslToHex(complement, saturation, 40)
+                ];
+            }
+        },
+        {
+            name: 'Triadic Balance',
+            description: 'Three colors equally spaced on the color wheel',
+            generate: (baseHue) => {
+                const saturation = 60 + Math.random() * 25;
+                return [
+                    hslToHex(baseHue, saturation, 40),
+                    hslToHex(baseHue, saturation - 15, 60),
+                    hslToHex((baseHue + 120) % 360, saturation, 45),
+                    hslToHex((baseHue + 120) % 360, saturation - 15, 65),
+                    hslToHex((baseHue + 240) % 360, saturation, 50)
+                ];
+            }
+        },
+        {
+            name: 'Split-Complementary',
+            description: 'A base color with two adjacent to its complement',
+            generate: (baseHue) => {
+                const saturation = 65 + Math.random() * 25;
+                return [
+                    hslToHex(baseHue, saturation, 45),
+                    hslToHex(baseHue, saturation - 10, 60),
+                    hslToHex((baseHue + 150) % 360, saturation, 50),
+                    hslToHex((baseHue + 180) % 360, saturation + 5, 55),
+                    hslToHex((baseHue + 210) % 360, saturation, 50)
+                ];
+            }
+        },
+        {
+            name: 'Tetradic Harmony',
+            description: 'Four colors arranged into two complementary pairs',
+            generate: (baseHue) => {
+                const saturation = 60 + Math.random() * 20;
+                return [
+                    hslToHex(baseHue, saturation, 45),
+                    hslToHex((baseHue + 90) % 360, saturation + 10, 55),
+                    hslToHex((baseHue + 180) % 360, saturation, 50),
+                    hslToHex((baseHue + 270) % 360, saturation + 10, 60),
+                    hslToHex((baseHue + 45) % 360, saturation - 10, 70)
+                ];
+            }
+        },
+        {
+            name: 'Monochromatic Elegance',
+            description: 'Variations of a single hue with different lightness',
+            generate: (baseHue) => {
+                const saturation = 65 + Math.random() * 25;
+                return [
+                    hslToHex(baseHue, saturation, 25),
+                    hslToHex(baseHue, saturation - 5, 40),
+                    hslToHex(baseHue, saturation - 10, 55),
+                    hslToHex(baseHue, saturation - 15, 70),
+                    hslToHex(baseHue, saturation - 20, 85)
+                ];
+            }
+        }
+    ];
+
+    const baseHue = Math.floor(Math.random() * 360);
+    const scheme = schemes[Math.floor(Math.random() * schemes.length)];
+    const colors = scheme.generate(baseHue);
+
+    return {
+        name: scheme.name,
+        description: scheme.description,
+        colors: colors
+    };
+}
+
+// Display generated palette
+function displayPalette() {
+    const palette = generateColorPalette();
+
+    paletteDisplay.innerHTML = palette.colors
+        .map((color, index) => `
+            <div class="color-swatch" style="background: ${color}" onclick="copyToClipboard('${color}', ${index})">
+                <div class="color-swatch-code">${color}</div>
+            </div>
+        `)
+        .join('');
+
+    paletteInfo.innerHTML = `
+        <div class="palette-name">${palette.name}</div>
+        <div class="palette-description">${palette.description}</div>
+    `;
+}
+
+// Copy color to clipboard
+function copyToClipboard(color, index) {
+    navigator.clipboard.writeText(color).then(() => {
+        const swatches = document.querySelectorAll('.color-swatch');
+        const originalContent = swatches[index].innerHTML;
+
+        swatches[index].innerHTML = `
+            <div class="color-swatch-code">✓ Copied!</div>
+        `;
+
+        setTimeout(() => {
+            swatches[index].innerHTML = originalContent;
+        }, 1500);
+    }).catch(err => {
+        alert('Failed to copy color code');
+    });
+}
 
 // Generate random mood
 function generateMood() {
@@ -163,6 +315,7 @@ function deleteFavorite(index) {
 
 // Event listeners
 generateBtn.addEventListener('click', generateMood);
+paletteBtn.addEventListener('click', displayPalette);
 saveBtn.addEventListener('click', saveFavorite);
 moodDisplay.addEventListener('click', generateMood);
 
@@ -174,6 +327,9 @@ document.addEventListener('keydown', (e) => {
     } else if (e.key === 's' || e.key === 'S') {
         e.preventDefault();
         saveFavorite();
+    } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        displayPalette();
     }
 });
 

@@ -172,6 +172,21 @@ button {
     transform: translateY(-1px);
 }
 
+.palette-btn {
+    background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+    color: white;
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+}
+
+.palette-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
+}
+
+.palette-btn:active {
+    transform: translateY(-1px);
+}
+
 .save-btn {
     background: rgba(255, 255, 255, 0.1);
     color: white;
@@ -186,6 +201,101 @@ button {
 
 .btn-icon {
     font-size: 1.3rem;
+}
+
+/* Palette section */
+.palette-section {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    animation: fadeIn 1s ease-out;
+}
+
+.palette-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--accent);
+}
+
+.palette-display {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.color-swatch {
+    aspect-ratio: 1;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.4s ease-out;
+}
+
+.color-swatch:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.color-swatch::before {
+    content: 'Click to copy';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.color-swatch:hover::before {
+    opacity: 1;
+}
+
+.color-swatch-code {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.palette-info {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.palette-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #a78bfa 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.palette-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
 }
 
 /* Favorites section */
@@ -275,6 +385,7 @@ footer {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -286,6 +397,7 @@ footer {
         opacity: 0;
         transform: translateY(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -297,6 +409,7 @@ footer {
         opacity: 0;
         transform: scale(0.8);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -307,6 +420,7 @@ footer {
     from {
         filter: drop-shadow(0 0 5px rgba(167, 139, 250, 0.5));
     }
+
     to {
         filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.8));
     }
@@ -317,25 +431,34 @@ footer {
     .title {
         font-size: 2rem;
     }
-    
+
     .mood-display {
         height: 300px;
     }
-    
+
     .mood-name {
         font-size: 1.8rem;
     }
-    
+
     .mood-quote {
         font-size: 1rem;
     }
-    
+
     .controls {
         flex-direction: column;
     }
-    
+
     button {
         width: 100%;
         justify-content: center;
+    }
+
+    .palette-display {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .color-swatch {
+        min-height: 120px;
     }
 }

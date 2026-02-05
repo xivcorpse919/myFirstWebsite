@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Mood Generator</title>
-    <meta name="description" content="An interactive color mood generator that creates beautiful gradients and inspiring quotes">
+    <meta name="description"
+        content="An interactive color mood generator that creates beautiful gradients and inspiring quotes">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -29,10 +32,22 @@
                     <span class="btn-icon">🎨</span>
                     Generate New Mood
                 </button>
+                <button class="palette-btn" id="paletteBtn">
+                    <span class="btn-icon">🎭</span>
+                    Generate Palette
+                </button>
                 <button class="save-btn" id="saveBtn">
                     <span class="btn-icon">💾</span>
                     Save Favorite
                 </button>
+            </div>
+
+            <div class="palette-section" id="paletteSection">
+                <h3 class="palette-title">Professional Color Palette</h3>
+                <div class="palette-display" id="paletteDisplay">
+                    <p class="empty-message">Click "Generate Palette" to create a harmonious 5-color palette</p>
+                </div>
+                <div class="palette-info" id="paletteInfo"></div>
             </div>
 
             <div class="favorites-section" id="favoritesSection">
@@ -50,4 +65,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
