@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Mood Generator</title>
+    <meta name="description" content="An interactive color mood generator that creates beautiful gradients and inspiring quotes">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">✨ Color Mood Generator ✨</h1>
+            <p class="subtitle">Discover your color vibe and get inspired</p>
+        </header>
+
+        <main>
+            <div class="mood-display" id="moodDisplay">
+                <div class="gradient-background" id="gradientBg"></div>
+                <div class="content-overlay">
+                    <h2 class="mood-name" id="moodName">Click to Generate</h2>
+                    <p class="mood-quote" id="moodQuote">Your inspiring quote will appear here</p>
+                    <div class="color-info" id="colorInfo"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="generate-btn" id="generateBtn">
+                    <span class="btn-icon">🎨</span>
+                    Generate New Mood
+                </button>
+                <button class="save-btn" id="saveBtn">
+                    <span class="btn-icon">💾</span>
+                    Save Favorite
+                </button>
+            </div>
+
+            <div class="favorites-section" id="favoritesSection">
+                <h3 class="favorites-title">Your Saved Moods</h3>
+                <div class="favorites-grid" id="favoritesGrid">
+                    <p class="empty-message">No favorites yet. Generate and save your favorite moods!</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Made with 💜 by you | Click anywhere to generate</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
